@@ -29,6 +29,8 @@ require_once($CFG->dirroot.'/grade/lib.php');
 
 $courseid = required_param('id', PARAM_INT);                   // course id
 
+$fullscreen_grade        = optional_param('fullscreen_grade', NULL, PARAM_INT);
+
 $PAGE->set_url(new moodle_url('/grade/export/checklist/index.php', array('id'=>$courseid)));
 if (!$course = $DB->get_record('course', array('id' => $courseid))) {
     print_error('nocourseid');
@@ -47,6 +49,12 @@ $viewall = has_capability('gradeexport/checklist:viewall', $context);
 $viewdistrict = has_capability('gradeexport/checklist:viewdistrict', $context);
 if (!$viewall && !$viewdistrict) {
     print_error('nopermission', 'gradeexport_checklist');
+}
+
+// Handle toggle fullscreen request
+if (!is_null($fullscreen_grade)) {
+    
+    set_user_preferences(array('fullscreen_grade_courseid_'.$course->id => ($fullscreen_grade==0?1:0)));
 }
 
 // Build navigation
