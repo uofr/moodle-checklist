@@ -15,7 +15,9 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="icon.svg">
+   sodipodi:docname="icon.svg" aria-labelledby="title" aria-describedby="desc">
+<title id="title">Checklist</title>
+<desc id="desc">Checklist icon</desc>
   <defs
      id="defs4">
     <linearGradient
