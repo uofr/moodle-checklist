@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of the Checklist plugin for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -29,14 +28,14 @@ class restore_checklist_activity_structure_step extends restore_activity_structu
             $paths[] = new restore_path_element('checklist_comment', '/activity/checklist/items/item/comments/comment');
         }
 
-        // Return the paths wrapped into standard activity structure
+        // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
 
     protected function process_checklist($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $oldid = $data->id;
         $data->course = $this->get_courseid();
 
@@ -51,7 +50,7 @@ class restore_checklist_activity_structure_step extends restore_activity_structu
     protected function process_checklist_item($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $oldid = $data->id;
 
         $data->checklist = $this->get_new_parentid('checklist');
@@ -59,7 +58,7 @@ class restore_checklist_activity_structure_step extends restore_activity_structu
         if ($data->userid > 0) {
             $data->userid = $this->get_mappingid('user', $data->userid);
         }
-        // Update to new data structure, where 'hidden' status is stored in separate field
+        // Update to new data structure, where 'hidden' status is stored in separate field.
         if ($data->itemoptional == 3) {
             $data->itemoptional = 0;
             $data->hidden = 1;
@@ -68,18 +67,11 @@ class restore_checklist_activity_structure_step extends restore_activity_structu
             $data->hidden = 1;
         }
 
-        // Apply offset to the deadline
+        // Apply offset to the deadline.
         $data->duetime = $this->apply_date_offset($data->duetime);
 
-        if (($data->moduleid > 0) && ($data->itemoptional < 2)) { // Do not match up headings with modules
-            $data->moduleid = $this->get_mappingid('course_modules', $data->moduleid);
-            // If this does not work, I'm not sure how to handle this case
-            // Probably best to skip the item, then let it get properly recreated when
-            // the checklist is next edited
-            if (!$data->moduleid) {
-                return;
-            }
-        }
+        // Sort out the rest of moduleids in the 'after_restore' function - after all the other activities have been restored.
+
         $newid = $DB->insert_record('checklist_item', $data);
         $this->set_mapping('checklist_item', $oldid, $newid);
     }
@@ -87,7 +79,7 @@ class restore_checklist_activity_structure_step extends restore_activity_structu
     protected function process_checklist_check($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $oldid = $data->id;
 
         $data->item = $this->get_new_parentid('checklist_item');
@@ -98,6 +90,9 @@ class restore_checklist_activity_structure_step extends restore_activity_structu
             $data->teachertimestamp = $this->apply_date_offset($data->teachertimestamp);
         }
         $data->userid = $this->get_mappingid('user', $data->userid);
+        if ($data->teacherid) {
+            $data->teacherid = $this->get_mappingid('user', $data->teacherid);
+        }
 
         $newid = $DB->insert_record('checklist_check', $data);
         $this->set_mapping('checklist_check', $oldid, $newid);
@@ -106,7 +101,7 @@ class restore_checklist_activity_structure_step extends restore_activity_structu
     protected function process_checklist_comment($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $oldid = $data->id;
 
         $data->itemid = $this->get_new_parentid('checklist_item');
@@ -120,9 +115,7 @@ class restore_checklist_activity_structure_step extends restore_activity_structu
     }
 
     protected function after_execute() {
-        global $DB;
-
-        // Add checklist related files, no need to match by itemname (just internally handled context)
+        // Add checklist related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_checklist', 'intro', null);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of the Checklist plugin for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -34,9 +33,9 @@ To remove the automatic items from the list, change this option back to \'No\', 
 $string['autoupdate'] = 'Check-off when modules complete';
 $string['autoupdate_help'] = 'This will automatically check-off items in your checklist when you complete the relevant activity in the course.<br />
 \'Completing\' an activity varies from one activity to another - \'view\' a resource, \'submit\' a quiz or assignment, \'post\' to a forum or join in with a chat, etc.<br />
-If a Moodle 2.0 completion tracking is switched on for a particular activity, that will be used to tick-off the item in the list<br />
+If completion tracking is switched on for a particular activity, that will be used to tick-off the item in the list<br />
 For details of exactly what causes an activity to be marked as \'complete\', ask your site administrator to look in the file \'mod/checklist/autoupdate.php\'<br />
-Note: it can take up to 60 seconds for a student\'s activity to be reflected in their checklist';
+Note: it can take a short while for a student\'s activity to be reflected in their checklist (when using completion tracking)';
 $string['autoupdatenote'] = 'It is the \'student\' mark that is automatically updated - no updates will be displayed for \'Teacher only\' checklists';
 
 $string['autoupdatewarning_both'] = 'There are items on this list that will be automatically updated (as students complete the related activity). However, as this is a \'student and teacher\' checklist the progress bars will not update until a teacher agrees the marks given.';
@@ -54,6 +53,7 @@ $string['checkeditemsdeleted'] = 'Checked items deleted';
 $string['checklist'] = 'checklist';
 $string['pluginadministration'] = 'Checklist administration';
 
+$string['checklist:addinstance'] = 'Add a new checklist';
 $string['checklist:edit'] = 'Create and edit checklists';
 $string['checklist:emailoncomplete'] = 'Receive completion emails';
 $string['checklist:preview'] = 'Preview a checklist';
@@ -77,6 +77,9 @@ $string['completionpercentgroup'] = 'Require checked-off';
 $string['completionpercent'] = 'Percentage of items that should be checked-off:';
 
 $string['configchecklistautoupdate'] = 'Before allowing this you must make a few changes to the core Moodle code, please see mod/checklist/README.txt for details';
+$string['configshowupdateablemymoodle'] = 'If this is checked then only updatable Checklists will be shown from the \'My Moodle\' page';
+$string['configshowcompletemymoodle'] = 'If this is unchecked then completed Checklists will be hidden from the \'My Moodle\' page';
+$string['configshowmymoodle'] = 'If this is unchecked then Checklist activities (with progress bars) will no longer appear on the \'My Moodle\' page';
 
 $string['confirmdeleteitem'] = 'Are you sure you want to permanently delete this checklist item?';
 
@@ -90,12 +93,21 @@ $string['editdatesstart'] = 'Edit dates';
 $string['editdatesstop'] = 'Stop editing dates';
 $string['edititem'] = 'Edit this item';
 
-$string['emailoncomplete'] = 'Email teachers when checklist is complete';
-$string['emailoncomplete_help'] = 'When a checklist is complete, a notification email is sent to all the teachers on the course.<br />
+$string['emailoncomplete'] = 'Email when checklist is complete:';
+$string['emailoncomplete_help'] = 'When a checklist is complete, a notification email can be sent: to the student who completed it, to all the teachers on the course or to both.<br />
 An administrator can control who receives this email using the capability \'mod:checklist/emailoncomplete\' - by default all teachers and non-editing teachers have this capability.';
 $string['emailoncompletesubject'] = 'User {$a->user} has completed checklist \'{$a->checklist}\'';
-$string['emailoncompletebody'] = 'User {$a->user} has completed checklist \'{$a->checklist}\'
+$string['emailoncompletesubjectown'] = 'You have completed checklist \'{$a->checklist}\'';
+$string['emailoncompletebody'] = 'User {$a->user} has completed checklist \'{$a->checklist}\' in the course \'{$a->coursename}\' 
 View the checklist here:';
+$string['emailoncompletebodyown'] = 'You have completed checklist \'{$a->checklist}\' in the course \'{$a->coursename}\' 
+View the checklist here:';
+
+$string['eventchecklistcomplete'] = 'Checklist complete';
+$string['eventeditpageviewed'] = 'Edit page viewed';
+$string['eventreportviewed'] = 'Report viewed';
+$string['eventstudentchecksupdated'] = 'Student checks updated';
+$string['eventteacherchecksupdated'] = 'Teacher checks updated';
 
 $string['export'] = 'Export items';
 
@@ -121,6 +133,7 @@ $string['lockteachermarks_help'] = 'When this setting is enabled, once a teacher
 $string['lockteachermarkswarning'] = 'Note: Once you have saved these marks, you will be unable to change any \'Yes\' marks';
 
 $string['modulename'] = 'Checklist';
+$string['modulename_help'] = 'The checklist module allows a teacher to create a checklist / todo list / task list for their students to work through.';
 $string['modulenameplural'] = 'Checklists';
 
 $string['moveitemdown'] = 'Move item down';
@@ -140,7 +153,7 @@ $string['progress'] = 'Progress';
 
 $string['removeauto'] = 'Remove course module items';
 
-$string['report'] = 'View Progress';
+$string['report'] = 'View progress';
 $string['reporttablesummary'] = 'Table showing the items on the checklist that each student has completed';
 
 $string['requireditem'] = 'This item is required - it must be completed';
@@ -149,12 +162,17 @@ $string['resetchecklistprogress'] = 'Reset checklist progress and user items';
 
 $string['savechecks'] = 'Save';
 
+$string['showcompletemymoodle'] = 'Show completed Checklists on \'My Moodle\' page';
 $string['showfulldetails'] = 'Show full details';
+$string['showupdateablemymoodle'] = 'Show only updatable Checklists on \'My Moodle\' page';
+$string['showmymoodle'] = 'Show Checklists on \'My Moodle\' page';
 $string['showprogressbars'] = 'Show progress bars';
 
 $string['teachercomments'] = 'Teachers can add comments';
+$string['teacherdate'] = 'Date a teacher last updated this item';
 
 $string['teacheredit'] = 'Updates by';
+$string['teacherid'] = 'The teacher who last updated this mark';
 
 $string['teachermarkundecided'] = 'Teacher has not yet marked this';
 $string['teachermarkyes'] = 'Teacher states that you have completed this';
@@ -164,13 +182,15 @@ $string['teachernoteditcheck'] = 'Student only';
 $string['teacheroverwritecheck'] = 'Teacher only';
 $string['teacheralongsidecheck'] = 'Student and teacher';
 
-$string['toggledates'] = 'Toggle dates';
-
+$string['togglecolumn'] = 'Toggle Column';
+$string['toggledates'] = 'Toggle names & dates';
+$string['togglerow'] = 'Toggle Row';
 $string['theme'] = 'Checklist display theme';
 
 $string['updatecompletescore'] = 'Save completion grades';
 $string['unindentitem'] = 'Unindent item';
 $string['updateitem'] = 'Update';
+$string['userdate'] = 'Date the user last updated this item';
 $string['useritemsallowed'] = 'User can add their own items';
 $string['useritemsdeleted'] = 'User items deleted';
 

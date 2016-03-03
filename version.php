@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of the Checklist plugin for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -23,9 +22,27 @@
  * @package mod/checklist
  */
 
-$module->version  = 2012070700;  // The current module version (Date: YYYYMMDDXX)
-$module->cron     = 60;          // Period for cron to check this module (secs)
-$module->maturity = MATURITY_STABLE;
-$module->release  = '2.x (Build: 2012070700)';
-$module->requires = 2010112400;
-$module->component = 'mod_checklist';
+defined('MOODLE_INTERNAL') || die();
+global $CFG;
+
+if (!isset($plugin)) {
+    // Avoid warning message in M2.5 and below.
+    $plugin = new stdClass();
+}
+// Used by M2.6 and above.
+$plugin->version = 2015122300;  // The current module version (Date: YYYYMMDDXX)
+$plugin->cron = 60;          // Period for cron to check this module (secs).
+$plugin->maturity = MATURITY_STABLE;
+$plugin->release = '2.x (Build: 2015122300)';
+$plugin->requires = 2010112400;
+$plugin->component = 'mod_checklist';
+
+if ($CFG->branch < 26) {
+    // Used by M2.5 and below.
+    $module->version = $plugin->version;
+    $module->cron = $plugin->cron;
+    $module->maturity = $plugin->maturity;
+    $module->release = $plugin->release;
+    $module->requires = $plugin->requires;
+    $module->component = $plugin->component;
+}

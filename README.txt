@@ -11,6 +11,37 @@ Students are presented with a simple chart showing how far they have progressed 
 
 ==Changes==
 
+* 2015-12-23 - Handle missing calendar events + fix deprecated 'get_referer' warning.
+* 2015-11-08 - M3.0 compatibility fixes
+* 2015-10-02 - Better forum completion support + Hotpot completion support
+* 2015-09-13 - M2.7+ cron not needed at all for automatic update of checklist (Moodle completion + 'complete from logs' both handled via events).
+* 2015-06-19 - In M2.7+ automatic update from logs now happens immediately (via the new events system), cron still needed for updates from completion.
+* 2015-05-09 - Moodle 2.9 compatibility fixes
+* 2015-04-28 - Autoupdate now works with Moodle 2.7+ logs, as well as legacy logs (for activities which do not have completion enabled)
+* 2015-03-02 - Fix item output so that multilang filters will work
+* 2015-02-21 - Add automated testing. Fix code to prevent multiple emails when same checklist completed multiple times by the same student within an hour.
+* 2015-02-19 - Setting 'max grade' to 0 in the checklist removes it from the gradebook
+* 2014-10-26 - Option to hide checklists you cannot update from 'My home' (thanks to Syxton); fix PostgreSQL compatibility with autoupdate.
+* 2014-07-06 - Fix toggle row/column buttons. Update version.php.
+* 2014-05-31 - Add toggle row / toggle column buttons to report view - developed by Simon Bertoli
+* 2014-05-31 - Add Moodle 2.7 event logging; fix Postgres compatibility (Tony Butler); prevent teachers seeing student reports when they cannot access any groups; fix centering of report headings (Syxton).
+* 2014-01-15 - Fix compatibility of MS SQL with 2.6 version of plugin.
+* 2013-19-11 - Moodle 2.6 compatibility fixes (+ correction to this fix)
+* 2013-11-11 - Cope with empty section names
+* 2013-07-30 - Fix editing of item indents
+* 2013-05-22 - 'Display description on course page' + (old)IE compatibility fix
+* 2013-05-06 - Fix Moodle 2.4 compatibility regression
+* 2013-04-24 - Minor fixes for Moodle 2.5 compatibility
+* 2013-04-09 - Allow checklists to import current section when they are located in an 'orphaned' section, add 'questionnaire' + 'assign' to autoupdate list
+* 2013-03-01 - Fixed the backup & restore of items linked to course modules.
+* 2013-01-04 - Option to email students when their checklists are complete - added by Andriy Semenets
+* 2013-01-03 - Fixed the 'show course modules in checklist' feature in Moodle 2.4
+* 2012-12-07 - Moodle 2.4 compatibility fixes
+* 2012-10-09 - Fixed email sending when checklists are complete (thanks to Longfei Yu for the bug report + fix)
+* 2012-09-20 - CONTRIB-3921: broken images in intro text; CONTRIB-3904: error when resetting courses; CONTRIB-3916: checklists can be hidden from 'My Moodle' (either all checklists, or just completed checklists); issue with checklists updating from 'completion' fixed; CONTRIB-3897: teachers able to see who last updated the teacher mark
+* 2012-09-19 - Split the 3 plugins (mod / block / grade report) into separate repos for better maintenance; added 'spinner' when updating server
+* 2012-08-25 - Minor fix to grade update function
+* 2012-08-06 - Minor fix to reduce chance of hitting max_input_vars limits when updated all student's checkmarks
 * 2012-07-07 - Improved progress bar styling; Improved debugging of automatic updates (see below); Fixed minor debug warnings
 * 2012-04-07 - mod/checklist:addinstance capability added (for M2.3); Russian / Ukranian translations from Andriy Semenets
 * 2012-03-05 - Bug fix: grades not updating when new items added to a course (with 'import course activities' on)
@@ -19,7 +50,9 @@ Students are presented with a simple chart showing how far they have progressed 
 * 2012-01-02 - CONTRIB-2979: remembers report settings (sort order, etc.) until you log out; CONTRIB-3308 - 'viewmenteereport' capability, allowing users to view reports of users they are mentors for
 
 ==Installation==
-(Note, due to the way the new plugins database works, if you are downloading this from the Moodle.org website, you will need to download the 'checklist block' and 'checklist grade export' plugins separately)
+The checklist block and grade report are separate, optional plugins that can be downloaded from:
+http://moodle.org/plugins/view.php?plugin=block_checklist
+http://moodle.org/plugins/view.php?plugin=gradeexport_checklist
 
 1. Unzip the contents of file you downloaded to a temporary folder.
 2. Upload the files to the your moodle server, placing the 'mod/checklist' files in the '[moodlefolder]/mod/checklist', (optionally) the 'blocks/checklist' files in the '[moodlefolder]/blocks/checklist' folder and (optionally) the 'grade/export/checklist' files in the '[moodlefolder]/grade/export/checklist' folder.
@@ -27,8 +60,6 @@ Students are presented with a simple chart showing how far they have progressed 
 
 IMPORTANT: The 'Check-off modules when complete' option now works via cron, by default. This means that there can be a delay of up to 60 seconds (or more - depending on how often your site runs 'cron' updates), between a student completing an activity and their checklist being updated.
 If you are not happy with this delay, then make the changes found in the file core_modifications.txt
-
-Note: if you are upgrading from a previous version, please delete the file 'mod/checklist/settings.php' from the server, as it is no longer needed.
 
 ==Problems with automatic update?==
 
@@ -79,7 +110,7 @@ If you allow a checklist to be updated by teachers (either exclusively, or in ad
 5. Click 'View all Progress' to go back to the view with all the students shown.
 
 ==Further information==
-Moodle plugins database entry: http://moodle.org/mod/data/view.php?d=13&rid=3582
+Moodle plugins database entry: http://moodle.org/plugins/view.php?plugin=mod_checklist
 Report a bug, or suggest an improvement: http://tracker.moodle.org/browse/CONTRIB/component/10608
 
 ==Contact details==

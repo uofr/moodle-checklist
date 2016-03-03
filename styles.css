@@ -1,7 +1,7 @@
 /* -*-CSS-*- */
 
 ol.checklist {
-    margin-top: 0;
+    margin-top: 10px;
     margin-bottom: 0;
 }
 
@@ -89,7 +89,7 @@ ol.checklist li .itemuserdate {
     position: absolute;
     width: 10em;
     left: 75%;
-    zindex: 100;
+    z-index: 100;
 }
 
 ol.checklist li .itemteacherdate {
@@ -97,7 +97,15 @@ ol.checklist li .itemteacherdate {
     position: absolute;
     width: 10em;
     left: 60%;
-    zindex: 100;
+    z-index: 100;
+}
+
+ol.checklist li .itemteachername {
+    background-color: #b0ffb0;
+    position: absolute;
+    width: 10em;
+    left: 45%;
+    z-index: 100;
 }
 
 .checklist-itemdue {
@@ -224,4 +232,28 @@ p.checklistwarning {
 
 .checklist_progress_percent {
     padding-left: 0.5em;
+}
+
+.jsenabled #checklistsavechecks {
+    display: none;
+}
+
+#checklistspinner {
+    display: none;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 16px;
+    height: 16px;
+    background-image: url([[pix:i/loading_small]]);
+}
+
+.checklistbox {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+ol.checklist label {
+    display: inline;
 }
